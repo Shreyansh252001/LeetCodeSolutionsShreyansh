@@ -40,3 +40,15 @@
         
         return v;
     }
+/*-----------------uses the next_permutation in c++ stl---------------------------------------------------*/
+
+          sort(nums.begin(),nums.end());
+        
+         vector<vector<int>> ans;
+        
+        do{
+            ans.push_back(nums);
+        }
+        while(next_permutation(nums.begin(),nums.end()));
+        
+        return ans;
