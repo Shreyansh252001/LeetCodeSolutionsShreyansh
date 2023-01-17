@@ -1,7 +1,4 @@
-class Solution {
-public:
-    int minFlipsMonoIncr(string s) {
-        int n=s.length(),num=0,ans=0;// ans will track '0''s to be made '1''s
+ int n=s.length(),num=0,ans=0;// ans will track '0''s to be made '1''s
         // num will track '1''s to be made '0''s
         
        // vector<int> dp(n,0);
@@ -19,11 +16,17 @@ public:
         }
         
         return ans;
-    }
-};
 
 /*
-another method with precompution*/.
+another method with precompution
+    
+Skip 0's until we encounter the first 1.
+Keep track of number of 1's in onesCount (Prefix).
+Any 0 that comes after we encounter 1 can be a potential candidate for flip. Keep track of it in flipCount.
+If flipCount exceeds oneCount - (Prefix 1's flipped to 0's)
+a. Then we are trying to flip more 0's (suffix) than number of 1's (prefix) we have.
+b. Its better to flip the 1's instead.*/
+
   class Solution {
 public:
     int minFlipsMonoIncr(string s) {
