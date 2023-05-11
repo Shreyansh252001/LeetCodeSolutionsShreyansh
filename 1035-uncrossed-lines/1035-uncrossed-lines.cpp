@@ -1,7 +1,8 @@
 class Solution {
 public:
    // https://leetcode.com/problems/uncrossed-lines/discuss/3512331/1035-Uncrossed-Lineorordynamic-programmingororc%2B%2Boror
-    vector<vector<int>> dp;
+    
+   // vector<vector<int>> dp;
     /*
     int solve(vector<int> nums1,vector<int> nums2,int n,int m)
     {
@@ -27,7 +28,7 @@ public:
         return dp[n-1][m-1]=solve(nums1,nums2,n-1,m-1);
     }*/
     
-    //Tabulation
+   /* //Tabulation
     
     int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) 
     {
@@ -48,6 +49,80 @@ public:
             }
         }
         
-        return dp[n][m];
-    }
+        return dp[n][m];*/
+    
+        vector<int> dp;
+    
+        int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) 
+        {
+            int n=nums1.size();
+            int m=nums2.size();
+            
+            int prev,curr;
+            
+            bool st=false;
+            
+            if(n>m)
+            {
+                st=true;
+            }
+            
+            if(!st)//n<m
+            {
+                dp.resize(n+1,0);
+                
+                for(int i=1;i<=m;i++)
+                {
+                    prev=0;
+                    
+                    for(int j=1;j<=n;j++)
+                    {
+                        curr=dp[j];
+                        
+                        if(nums2[i-1]==nums1[j-1])
+                        {
+                            cout<<"first 1"<<"\n";
+                            dp[j]=prev+1;
+                        }
+                        else
+                        {
+                               cout<<"second 1"<<"\n";
+                            dp[j]=max(dp[j-1],curr);
+                        }
+                        
+                        prev=curr;
+                    }
+                }
+                
+                return dp[n];
+             }
+            
+            //else m<n
+            dp.resize(m+1,0);
+        
+                for(int i=1;i<=n;i++)
+                {
+                    prev=0;
+                    
+                    for(int j=1;j<=m;j++)
+                    {
+                        curr=dp[j];
+                        
+                        if(nums1[i-1]==nums2[j-1])
+                        {
+                            cout<<"first 2"<<"\n";
+                            dp[j]=prev+1;
+                        }
+                        else
+                        {
+                            cout<<"second 2"<<"\n";
+                            dp[j]=max(dp[j-1],curr);
+                        }
+                        
+                        prev=curr;
+                    }
+                }
+                
+            return dp[m];
+        }
 };
