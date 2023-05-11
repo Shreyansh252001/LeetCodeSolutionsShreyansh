@@ -1,19 +1,21 @@
 class Solution {
 public:
+   // https://leetcode.com/problems/uncrossed-lines/discuss/3512331/1035-Uncrossed-Lineorordynamic-programmingororc%2B%2Boror
     vector<vector<int>> dp;
     
-    int solve(vector<int> nums1,vector<int> nums2,int n1,int n2)
+    int solve(vector<int> nums1,vector<int> nums2,int n,int m)
     {
-        if(n1<0||n2<0)
+        if(n<0||m<0)//base case now the index has gone out of bounds
             return 0;
         
-        if(nums1[n1]==nums2[n2])
-            return 1+solve(nums1,nums2,n1-1,n2-1);
+        if(dp[n][m]!=-1)// this is the point to be considered , we have saved a lots of recursive cals if we have computed and stored the result in 2-D array
+            return dp[n][m];
         
-        if(dp[n1][n2]!=-1)
-            return dp[n1][n2];
-    
-        return dp[n1][n2]=max(solve(nums1,nums2,n1-1,n2),solve(nums1,nums2,n1,n2-1));
+        
+        if(nums1[n]==nums2[m])
+            return 1+solve(nums1,nums2,n-1,m-1);//adding 1 due to same character found and this time both the pointers have moved one step down
+        
+        return dp[n][m]=max(solve(nums1,nums2,n-1,m),solve(nums1,nums2,n,m-1));//calling by moving only one pointer as the current index characters are not matching
     }
     
     int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) 
