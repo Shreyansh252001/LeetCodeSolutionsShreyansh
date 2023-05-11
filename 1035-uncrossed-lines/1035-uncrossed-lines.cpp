@@ -2,7 +2,7 @@ class Solution {
 public:
    // https://leetcode.com/problems/uncrossed-lines/discuss/3512331/1035-Uncrossed-Lineorordynamic-programmingororc%2B%2Boror
     vector<vector<int>> dp;
-    
+    /*
     int solve(vector<int> nums1,vector<int> nums2,int n,int m)
     {
         if(n<0||m<0)//base case now the index has gone out of bounds
@@ -25,5 +25,29 @@ public:
         dp.resize(n,vector<int>(m,-1));
         
         return dp[n-1][m-1]=solve(nums1,nums2,n-1,m-1);
+    }*/
+    
+    //Tabulation
+    
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) 
+    {
+         int n=nums1.size(),m=nums2.size();
+        
+        dp.resize(n+1,vector<int>(m+1,0));
+        
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                
+                if(nums1[i-1]==nums2[j-1])
+                    dp[i][j]=dp[i-1][j-1]+1;
+                else
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                
+            }
+        }
+        
+        return dp[n][m];
     }
 };
