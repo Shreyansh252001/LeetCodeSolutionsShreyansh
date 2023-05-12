@@ -22,7 +22,7 @@ public:
     }
     */
     /*Memoization( 1-D dp)
-    */
+
     
     vector<long long int> dp;
     
@@ -48,5 +48,28 @@ public:
        return takenottake(questions,0,n); 
     }
     
-    //*/
+    */
+    
+    /*Tabulation (bottom up APPROACH) */
+     long long mostPoints(vector<vector<int>>& questions)
+    {
+       long int n=questions.size();
+       
+       vector<long long int> dp(n+1,0);
+         
+        dp[n]=questions[n-1][0];
+         
+       for(int i=n-1;i>=0;i--)
+       {
+           if(i+questions[i][1]+1<n)
+               dp[i]=questions[i][0]+dp[i+questions[i][1]+1];
+           else
+               dp[i]=questions[i][0];
+           
+           dp[i]=max(dp[i],dp[i+1]);
+       }
+         
+       return dp[0];
+    }
+   // */
 };
