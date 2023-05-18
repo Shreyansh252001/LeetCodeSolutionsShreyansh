@@ -9,33 +9,48 @@ using namespace std;
 
 class Solution {
     public:
-    
-    int n,m;
-    
-      int dx[4] = {1,-1,0,0};
-    int dy[4] = {0,0,1,-1};
-    
-    bool dfs(vector<vector<int>>& matrix, int N, int M, int x, int y){
-        matrix[x][y] = 0;
-        bool flag = (x==0 || x==N-1 || y==0 || y==M-1) ? false : true;
-        for(int i=0; i<4; ++i){
-            int x1 = x+dx[i], y1 = y+dy[i];
-            if(x1>=0 && x1<N  && y1>=0 && y1<M && matrix[x1][y1]==1){
-                flag &= dfs(matrix, N, M, x1, y1);
-            }
-        }
-        return flag;
+    void help(vector<vector<int>> & arr, int i, int j, int& N, int& M){
+        if(i<0|| j<0|| i==N|| j==M || arr[i][j]==0) 
+            return ;
+        arr[i][j]=0;
+        
+        help(arr, i+1, j, N, M);
+        help(arr, i-1, j, N, M);
+        help(arr, i, j+1, N, M);
+        help(arr, i, j-1, N, M);
+        
     }
-    
     int closedIslands(vector<vector<int>>& matrix, int N, int M) {
         // Code here
-        int cnt = 0;
-        for(int i=0; i<N; ++i){
-            for(int j=0; j<M; ++j){
-                if(matrix[i][j]==1 && dfs(matrix, N, M, i, j)) cnt++;
+        int ans = 0;
+        for(int i=0; i<N; i++)
+        {
+            for(int j=0; j<M; j++)
+            {
+                if(matrix[i][j]==1)
+                {
+                    if(i==0 || i==N-1 || j==0 || j==M-1)
+                    {
+                        help(matrix, i, j, N, M);
+                    }
+                }
             }
         }
-        return cnt;
+        
+        
+        for(int i=1; i<N-1; i++)
+        {
+            for(int j=1; j<M-1; j++)
+            {
+                if(matrix[i][j]==1)
+                {
+                    ans++;
+                    help(matrix, i, j,N ,M);
+                }
+            }
+        }
+        return ans;
+        
     }
 };
 
