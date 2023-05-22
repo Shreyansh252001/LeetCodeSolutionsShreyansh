@@ -5,11 +5,10 @@ public:
     //     int val;
     //     int 
     // }
-    /*using priority queue + map*/
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        
+    vector<int> topKFrequent(vector<int>& nums, int k)
+    {
         unordered_map<int,int> mp;
-        vector<int> v;
+        
         int n=nums.size();
         
         for(int i=0;i<n;i++)
@@ -17,34 +16,31 @@ public:
             mp[nums[i]]++;
         }
         
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq; // will keep in format {frequency,num} [{1,2},{3,5},{6,5},{6,2}] till the size of prirority queue is k
+        
+        //returntype functionname data structure parameters function content inside
+         auto comp=[&mp](int a,int b){return mp[a]>mp[b];};
+        
+        //as there is no greater specified so this is a normal priority queue
+        priority_queue<int,vector<int>,decltype(comp)> pq(comp);
+        
+        //decltype specifies the return type of comparator function that is the map first part of pair
         
         for(auto it:mp)
         {
-            if(pq.size()==k)
-            {
-                
-                if(it.second>pq.top().first)// comparing the lowest frequency having number in priority queue if it is less than our upcoming map pair's frequency then we will remove the lowest frequency of priority queue and add the new map pair to the prirority queue in it's place
-                {
-                  pq.pop();
-                    pq.push({it.second,it.first});
-                }
-                
-            }
-            else
-            {
-                pq.push({it.second,it.first});
-            }
+            pq.push(it.first);
+            
+            if(pq.size()>k)
+                pq.pop();
         }
         
-        //popping all the elements of priroity queue
-     
-        while(!pq.empty())
+        vector<int> top(k);
+        
+        for(int i=0;i<k;i++)
         {
-            v.push_back(pq.top().second);
+            top[i]=pq.top();
             pq.pop();
         }
         
-        return v;
+        return top;
     }
 };
