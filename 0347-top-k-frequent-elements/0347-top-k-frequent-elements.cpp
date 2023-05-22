@@ -27,7 +27,8 @@ public:
         
         for(auto it:mp)
         {
-            pq.push(it.first);
+            pq.push(it.first);//for [1,1,1,2,2,3]
+//k=2      1  ---->   2,1 ---> 3,2,1
             
             if(pq.size()>k)
                 pq.pop();
