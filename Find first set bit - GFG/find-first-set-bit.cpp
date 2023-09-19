@@ -16,7 +16,8 @@ class Solution
     unsigned int getFirstSetBit(int n)
     {
         // Your code here
-        return log2(n & -(n))+1;/
+        return log2(n & -(n))+1;//see the -(n) does the 2's complement, and does bitwise and with n to raise bit by 1
+        //now 2's complement is first you find complement of the number opposite ofeach bit and then + 1 to that complement
     }
 };
 
