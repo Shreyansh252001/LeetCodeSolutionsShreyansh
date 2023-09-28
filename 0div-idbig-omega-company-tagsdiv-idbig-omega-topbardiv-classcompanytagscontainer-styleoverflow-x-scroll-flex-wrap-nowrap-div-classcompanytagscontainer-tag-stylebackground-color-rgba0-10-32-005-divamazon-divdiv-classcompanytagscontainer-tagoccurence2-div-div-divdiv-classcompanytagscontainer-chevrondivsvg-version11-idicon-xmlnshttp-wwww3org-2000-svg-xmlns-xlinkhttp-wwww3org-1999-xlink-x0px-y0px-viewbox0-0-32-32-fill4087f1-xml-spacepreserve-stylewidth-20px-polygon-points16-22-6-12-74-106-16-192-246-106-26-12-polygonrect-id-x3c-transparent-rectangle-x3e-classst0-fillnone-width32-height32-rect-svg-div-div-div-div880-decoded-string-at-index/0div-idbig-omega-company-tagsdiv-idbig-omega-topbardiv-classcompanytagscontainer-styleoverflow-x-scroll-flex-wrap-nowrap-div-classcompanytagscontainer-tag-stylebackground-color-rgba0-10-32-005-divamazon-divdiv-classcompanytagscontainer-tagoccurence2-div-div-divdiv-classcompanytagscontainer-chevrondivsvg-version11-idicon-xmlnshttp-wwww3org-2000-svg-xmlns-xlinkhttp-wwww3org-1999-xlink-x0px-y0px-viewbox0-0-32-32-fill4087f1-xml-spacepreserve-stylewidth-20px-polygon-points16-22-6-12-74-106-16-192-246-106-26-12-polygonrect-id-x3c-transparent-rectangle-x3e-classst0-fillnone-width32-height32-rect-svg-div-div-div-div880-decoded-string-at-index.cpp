@@ -1,45 +1,31 @@
 class Solution {
 public:
-    string decodeAtIndex(string S, int K)
+    string decodeAtIndex(string s, int K) 
     {
         
-       /* int n=s.length(),i,size=n;
+        long int size=0,n=s.length();
         
-        for(i=0;n<k;i++)
+        for(int i=0;i<n;i++)
         {
-            n+=isdigit(s[i])?n*(s[i]-'0'):n+1;
+            size=isalpha(s[i])?size+1:(s[i]-'0')*(size);
         }
         
-        swap(size,n);
+        int i=n-1;
         
-        for(int i=n-1;i>=0;i--)
-        {
-            size=size%k;
+       //cout<<sum<<"\n";
+        
+          for(int i = n-1; i>=0; i--) 
+          {
+            K = K%size;
             
-            if(isalpha(s[i]) && k==0)//s[i] is a character with k=0
-            {
-                cout<<"enterd"<<"\n";
-               return ""+s[i];
-                
-            }
-            else if(isalpha(s[i]))
-            {
+            if(K == 0  && isalpha(s[i]))
+                return string(1, s[i]);
+            
+            if(isalpha(s[i]))
                 size--;
-            }
             else
-                size=size/(s[i]-'0');
+                size = size/(s[i]-'0');
         }
-        
-        return "";*/
-        
-        long N = 0, i;
-        for (i = 0; N < K; ++i)
-            N = isdigit(S[i]) ? N * (S[i] - '0') : N + 1;
-        while (i--)
-            if (isdigit(S[i]))
-                N /= S[i] - '0', K %= N;
-            else if (K % N-- == 0)
-                return string(1, S[i]);
-        return "lee215";
+        return "game over";
     }
 };
