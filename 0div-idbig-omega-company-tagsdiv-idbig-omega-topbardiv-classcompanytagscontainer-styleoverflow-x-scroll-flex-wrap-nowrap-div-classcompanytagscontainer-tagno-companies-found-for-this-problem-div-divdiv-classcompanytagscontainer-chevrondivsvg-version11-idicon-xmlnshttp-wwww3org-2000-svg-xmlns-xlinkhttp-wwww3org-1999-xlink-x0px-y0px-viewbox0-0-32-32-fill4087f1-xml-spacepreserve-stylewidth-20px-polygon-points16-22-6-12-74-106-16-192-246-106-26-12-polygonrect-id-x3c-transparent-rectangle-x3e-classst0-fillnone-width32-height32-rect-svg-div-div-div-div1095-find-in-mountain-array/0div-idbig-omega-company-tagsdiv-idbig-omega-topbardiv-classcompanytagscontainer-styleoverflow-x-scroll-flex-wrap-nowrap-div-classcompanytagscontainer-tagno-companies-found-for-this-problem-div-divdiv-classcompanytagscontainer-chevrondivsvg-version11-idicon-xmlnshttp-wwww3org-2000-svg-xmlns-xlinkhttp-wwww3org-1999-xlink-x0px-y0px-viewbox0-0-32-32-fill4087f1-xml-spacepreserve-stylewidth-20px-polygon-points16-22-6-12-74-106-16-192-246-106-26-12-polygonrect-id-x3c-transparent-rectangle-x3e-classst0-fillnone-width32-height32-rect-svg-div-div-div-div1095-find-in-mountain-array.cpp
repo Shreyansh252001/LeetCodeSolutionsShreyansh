@@ -10,16 +10,17 @@
 
 class Solution {
 public:
-    int bs(MountainArray& m,int low,int high,int target,bool reversed)
+    int bs(MountainArray& m,int l,int r,int target,bool reverse)
     {
-      /*  while(l<r)
+        while(l!=r)
         {
             int mid=(l+r)>>1;
+            
             int num=m.get(mid);
+            
             //not reverse
             if(reverse)
             {
-                
                 if(num>target)
                 {
                   l=mid+1;   
@@ -31,7 +32,7 @@ public:
             }
             else
             {
-                if(num>target)
+                if(num>=target)
                 {
                     r=mid;
                 }
@@ -43,9 +44,11 @@ public:
         }
         
         
-        return l;*/
+        return l;
         
-           while (low != high) {
+          /* 
+        while (low != high) 
+        {
             int mid = low + (high - low) / 2;
             if (reversed) {
                 if (m.get(mid) > target)
@@ -60,6 +63,8 @@ public:
             }
         }
         return low; // Return the index where the target should be or would be inserted.
+        */
+        
     }
     
     int findInMountainArray(int target, MountainArray &m) 
