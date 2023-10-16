@@ -1,15 +1,37 @@
-
-int dp[1001][1001] = {}, mod = 1000000007;
-class Solution {
+class Solution 
+{
 public:
-int dfs(int k, int d) {
-    if (d >= k)
-        return d == k;
-    if (dp[k][d] == 0)
-        dp[k][d] = (1 + dfs(k - 1, d + 1) + dfs(k - 1, abs(d - 1))) % mod;
-    return dp[k][d] - 1;
-} 
-int numberOfWays(int startPos, int endPos, int k) {
-    return dfs(k, abs(startPos - endPos));
-}
+    const long int mod=1000000007;
+    
+    vector<vector<long long int>> dp;
+    
+    long long int dfs(int s,int e,int k)
+    {
+        
+        if(k==0)
+        {
+            if(s==e)
+                return 1;
+            else
+                return 0;
+        }
+        if(k<0)
+            return 0;
+        
+        // if(s<=0 || s>e)
+        //     return 0;
+        //cout<<s<<" "<<k<<"\n";
+        
+        if(dp[s+1000][k]!=INT_MAX)
+            return dp[s+1000][k];
+        
+        return dp[s+1000][k]=(dfs(s+1,e,k-1)+dfs(s-1,e,k-1))%mod;
+    }
+    
+    int numberOfWays(int startPos, int endPos, int k)
+    {
+        dp.resize(3001,vector<long long int>(k+1,INT_MAX));
+        
+        return dfs(startPos,endPos,k)%mod;
+    }
 };
