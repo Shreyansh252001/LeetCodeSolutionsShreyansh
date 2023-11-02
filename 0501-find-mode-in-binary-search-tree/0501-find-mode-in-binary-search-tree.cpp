@@ -14,28 +14,28 @@ public:
     vector<int> findMode(TreeNode* root) 
     {
         
-        /*
+        
         if(!root)
             return {};
         
-        stack<TreeNode*> st;
-        TreeNode* temp=root;
-          st.push(temp);
-        map<int,int> mp;
+vector<TreeNode*> stack;
+        stack.push_back(root);
+        unordered_map<int,int> mp;
         
-        while(!st.empty())
-        {
-          
-            temp=st.top();
-            st.pop();
-            mp[temp->val]++;
-            
-            if(root->left)
-                st.push(root->left);
-            if(root->right)
-                st.push(root->right);
-            
+           while (!stack.empty()) {
+            TreeNode* node = stack.back();
+            stack.pop_back();
+
+            mp[node->val]++;
+               
+            if (node->left != nullptr) {
+                stack.push_back(node->left);
+            }
+            if (node->right != nullptr) {
+                stack.push_back(node->right);
+            }
         }
+        
         
         int maxi=0;
         vector<int> ans;
@@ -45,15 +45,16 @@ public:
             maxi=max(maxi,it.second);
         }
         
-        for(auto it:mp)
-        {
-            if(it.second==maxi)
-                ans.push_back(it.first);
+     
+        for (auto& [key, val] : mp) {
+            if (val == maxi) {
+                ans.push_back(key);
+            } 
         }
         
-        return ans;*/
+        return ans;
         
-
+/*
         unordered_map<int, int> counter;
         vector<TreeNode*> stack;
         stack.push_back(root);
@@ -84,7 +85,7 @@ public:
             } 
         }
         
-        return ans;
+        return ans;*/
     
     }
 };
