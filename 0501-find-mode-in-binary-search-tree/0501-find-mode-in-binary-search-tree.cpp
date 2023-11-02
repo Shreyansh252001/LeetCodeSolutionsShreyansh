@@ -11,81 +11,46 @@
  */
 class Solution {
 public:
-    vector<int> findMode(TreeNode* root) 
+    void dfs(TreeNode* root,vector<int> &ans)
     {
-        
-        
         if(!root)
-            return {};
+            return;
         
-vector<TreeNode*> stack;
-        stack.push_back(root);
-        unordered_map<int,int> mp;
+        dfs(root->left,ans);
+        ans.push_back(root->val);
+        dfs(root->right,ans);
+    }
+    vector<int> findMode(TreeNode* root) {
+        vector<int> ans,res;
+        //array will contain complete tree in soreted form as it will be an pre order traversal on BST
+        dfs(root,ans);
         
-           while (!stack.empty()) {
-            TreeNode* node = stack.back();
-            stack.pop_back();
-
-            mp[node->val]++;
-               
-            if (node->left != nullptr) {
-                stack.push_back(node->left);
-            }
-            if (node->right != nullptr) {
-                stack.push_back(node->right);
-            }
-        }
+        int maxst=0,currst=0,currnum=0;
         
-        
-        int maxi=0;
-        vector<int> ans;
-        
-        for(auto it:mp)
+        for(int it:ans)
         {
-            maxi=max(maxi,it.second);
-        }
-        
-     
-        for (auto& [key, val] : mp) {
-            if (val == maxi) {
-                ans.push_back(key);
-            } 
-        }
-        
-        return ans;
-        
-/*
-        unordered_map<int, int> counter;
-        vector<TreeNode*> stack;
-        stack.push_back(root);
-        
-        while (!stack.empty()) {
-            TreeNode* node = stack.back();
-            stack.pop_back();
-
-            counter[node->val]++;
-            if (node->left != nullptr) {
-                stack.push_back(node->left);
+            if(it==currnum)
+                currst++;
+            else
+            {
+                currst=1;
+                currnum=it;
             }
-            if (node->right != nullptr) {
-                stack.push_back(node->right);
+            
+            if(currst>maxst)
+            {
+                maxst=currst;
+                res={};
+                
+            }
+            
+            
+            if(currst==maxst)
+            {
+                res.push_back(it);
             }
         }
         
-        int maxFreq = 0;
-
-        for (auto& [key, val] : counter) {
-            maxFreq = max(maxFreq, val);
-        }
-        
-        vector<int> ans;
-        for (auto& [key, val] : counter) {
-            if (val == maxFreq) {
-                ans.push_back(key);
-            } 
-        }
-        
-        return ans;*/
-    
+        return res;
     }
 };
